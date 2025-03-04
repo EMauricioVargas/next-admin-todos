@@ -30,13 +30,12 @@ const putSchema = yup.object({
 export async function PUT(request: Request, { params }: Segments) {
 
     try {
+        const { id } = await params
         const body = await putSchema.validate(await request.json());
         const updatedTodo = await prisma.todo.update({
-            where: { id: params.id },
+            where: { id },
             data: { ...body }
         })
-
-
 
         return NextResponse.json(updatedTodo);
 
